@@ -6,7 +6,7 @@
                 <h2><?=$article["nom_produit"]?></h2>
 
                 <img src="<?=$article["pic"]?>" alt="" srcset="">
-                <button>En Savoir Plus</button>
+                <a href="<?=HTTP?>test<?= DIRECTORY_SEPARATOR . $article["id_produit"]?>"><button>En Savoir Plus</button></a>
                 <button>Acheter</button>
             </div>
         <?php endforeach?>

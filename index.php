@@ -12,12 +12,14 @@ require 'vendor/autoload.php';
 use App\Controller\ArticleController;
 use App\Controller\CategorieController;
 use App\Controller\CommandeController;
+use App\Controller\PanierController;
 use App\Controller\UserController;
 use App\Core\Request;
 use App\Core\Router;
 use App\Core\Session;
 use App\Exception\RouterException;
 use App\Repository\UserRepository;
+use App\Services\CommandeServices;
 
 session_start();
 $session = new Session(
@@ -57,45 +59,49 @@ if ($request->getFilenameExtension() === "png" || $request->getFilenameExtension
     $router = new Router($request);
     $artController = new ArticleController();
     $categController = new CategorieController();
+    $panierController = new PanierController();
     //on ajoute les routes dispo dans l'appli
 
-
+    dump($_POST);
     $router->add("", [$artController, 'index'], $request->getMethod());
     $router->add("ficheproduit/:id", [$artController, "show"], $request->getMethod());
     $router->add("categorie/:id", [$categController, 'index'], $request->getMethod());
     $router->add("search", [$artController, 'search'], $request->getMethod());
-
+    $router->add("test/:id", [$artController, 'show'], $request->getMethod());
+    //$router->add("test/:id/addtocart/:id_commande",[$panierController,'nouveauPanier'],$request->getMethod());
 
     //on ajoute les routes dispo dans l'appli
+
+    
 
     $router->add("signup",function(){
     (new UserRepository());
     (new UserController())->userSignup();
-    (new CommandeController())->commandeCheck();
+    (new CommandeServices())->commandeCheck();
     },$request->getMethod());
 
 $router->add("signin",function(){
     (new UserRepository());
     (new UserController())->userSignin();
-    (new CommandeController())->commandeCheck();
+    (new CommandeServices())->commandeCheck();
     },$request->getMethod());
 
 $router->add("signout",function(){
     (new UserRepository());
     (new UserController())->userSignout();
-    (new CommandeController())->commandeCheck();
+    (new CommandeServices())->commandeCheck();
     },$request->getMethod());
 
 $router->add("user/show",function(){
     (new UserRepository());
     (new UserController())->userShow(($_SESSION["user"])->getId_user());
-    (new CommandeController())->commandeCheck();
+    (new CommandeServices())->commandeCheck();
     },$request->getMethod());
 
 $router->add("user/update",function(){
     (new UserRepository());
     (new UserController())->userUpdate(($_SESSION["user"])->getId_user());
-    (new CommandeController())->commandeCheck();
+    (new CommandeServices())->commandeCheck();
     },$request->getMethod());
 
 $router->add("commande/validation",function(){

@@ -6,10 +6,11 @@ use App\Core\Abstract\AbstractController;
 use App\Repository\PanierRepository;
 
 class PanierController extends AbstractController {
-    public function nouveauPanier($id_commande) {
-        
+    //params est correspondance URI
+    public function nouveauPanier($params) {
+        //dd($params);
         $panier = new PanierRepository();
-        $cart = $panier->newPanier($id_commande);
+        $cart = $panier->newPanier($params);
         dump($cart);
     }
 }
