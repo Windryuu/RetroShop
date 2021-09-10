@@ -17,14 +17,14 @@ class PanierRepository {
         $this->pdo = $userbd->getPdo();
     }
 
-    public function newPanier($id_commande){
+    public function newPanier($id_commande,$id_produit,$qte){
         $req = $this->pdo->prepare(
         "INSERT INTO panier (id_commande,id_produit,quantite) 
                         VALUES ( :id_commande,:id_produit,:quantite) ");
         $req->execute([
             ":id_commande" => $id_commande,
-            ":id_produit" => 5,
-            ":quantite" => 5
+            ":id_produit" => $id_produit,
+            ":quantite" => $qte
         ]);
     }
 

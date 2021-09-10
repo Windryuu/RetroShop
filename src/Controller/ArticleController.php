@@ -39,12 +39,13 @@ class ArticleController extends AbstractController {
         
         $articles = $repo->getOneArticle($params[0]);
         $avisClients = $repo->showRemarkAndNote($params[0]);
+        //dump($articles);
         //$commserv = new CommandeServices();
         $verifcommande = $this->commserv->commandeCheck();
         // dd($avisClients);
         if(!empty($_POST)){
             $cart = new PanierController();
-            $crt = $cart->nouveauPanier(($verifcommande)->getId_commande());
+            $crt = $cart->nouveauPanier(($verifcommande)->getId_commande(),$articles->getId_produit(),$_POST["quantite"]);
         }
         $this->render("articles/FicheProduit.php", [
             'articles' => $articles,

@@ -60,14 +60,18 @@ if ($request->getFilenameExtension() === "png" || $request->getFilenameExtension
     $artController = new ArticleController();
     $categController = new CategorieController();
     $panierController = new PanierController();
+    $cmdController = new CommandeController();
     //on ajoute les routes dispo dans l'appli
 
-    dump($_POST);
+    //dump($_POST);
     $router->add("", [$artController, 'index'], $request->getMethod());
+    $router->add("articles", [$artController, 'index'], $request->getMethod());
     $router->add("ficheproduit/:id", [$artController, "show"], $request->getMethod());
     $router->add("categorie/:id", [$categController, 'index'], $request->getMethod());
     $router->add("search", [$artController, 'search'], $request->getMethod());
     $router->add("test/:id", [$artController, 'show'], $request->getMethod());
+    $router->add("commande", [$cmdController, 'showCommande'], $request->getMethod());
+    $router->add("commande/validation", [$cmdController, 'updateCommande'],$request->getMethod());
     //$router->add("test/:id/addtocart/:id_commande",[$panierController,'nouveauPanier'],$request->getMethod());
 
     //on ajoute les routes dispo dans l'appli

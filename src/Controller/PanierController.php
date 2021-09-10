@@ -7,10 +7,10 @@ use App\Repository\PanierRepository;
 
 class PanierController extends AbstractController {
     //params est correspondance URI
-    public function nouveauPanier($params) {
+    public function nouveauPanier($id_commande,$id_produit,$qte) {
         //dd($params);
         $panier = new PanierRepository();
-        $cart = $panier->newPanier($params);
-        dump($cart);
+        $cart = $panier->newPanier($id_commande,$id_produit,$qte);
+        //dump($cart);
     }
 }
