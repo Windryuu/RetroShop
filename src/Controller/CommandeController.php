@@ -27,17 +27,19 @@ public function __construct()
             $art = $article->getOneArticle($item->getId_produit());
             $nameItem[] = $art->getNom_produit();
             $refItem[] = $art->getRef();
+            $prixUnite[] = $art->getPrix_unitaire();
         }
         
         $this->render("commande/maCommande.php", [
             'paniers' => $crt,
             'nomItem' => $nameItem,
             'refItem' => $refItem,
+            'prixU' => $prixUnite,
             'title' => $title
         ]);
     }
 
-    public function updateCommande(){
+    public function validationCommande(){
         if(isset($_SESSION["user"])){
             $title = "validation";
             
@@ -45,7 +47,7 @@ public function __construct()
             $usr = new UserRepository();
             $user = $usr->getUserById(($_SESSION["user"])->getId_user());
             $commId = $cmd->getCommandeById_userCheckState($user,"panier");
-            $upcomm = $cmd->updateCommande($user,$commId);
+            $upcomm = $cmd->validationCommande($user,$commId);
             $this->render('commande/validation.php',["title"=>$title]);
         }
     }

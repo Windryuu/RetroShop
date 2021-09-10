@@ -48,8 +48,8 @@ private PDO $pdo;
         }
     }
 
-    public function updateCommande(User $user,Commande $commande){
-        $req =$this->pdo->prepare("UPDATE commande 
+    public function validationCommande(User $user,Commande $commande){
+        $req = $this->pdo->prepare("UPDATE commande 
         SET etat = :etatval,total= :total 
         WHERE id_user = :id_user AND etat = :etat");
         $req->execute([

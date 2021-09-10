@@ -39,6 +39,7 @@ class PanierRepository {
 
         foreach($result as $key => $articlePanier){
             $result[$key] = (new Panier())
+            ->setId($articlePanier["id"])
             ->setId_commande($articlePanier["id_commande"])
             ->setId_produit($articlePanier["id_produit"])
             ->setQuantite($articlePanier["quantite"]);
@@ -48,14 +49,26 @@ class PanierRepository {
         
     }
 
-    public function updatePanier(Panier $panier){
-        //$article = new Article();
-        $req = $this->pdo->prepare("UPDATE panier 
-        SET id_produit = :id_produit, quantite = :quantite 
-        WHERE ");
+    public function getPanierbyId($id) {
+        $req = $this->pdo->prepare("SELECT * FROM panier WHERE id= :id");
         $req->execute([
-            //":id_produit" => $panier->addItem($article),
-            //":quantite" => $panier->addQte($article)
+            ":id" => $id
+        ]);
+        $req->setFetchMode(PDO::FETCH_CLASS,Panier::class);
+        
+        $result = $req->fetch();
+        return $result;
+        
+    }
+
+    public function updatePanier(Panier $panier,$qte){
+        //$article = new Article();
+        $req = $this->pdo->prepare("UPDATE panier SET
+        quantite = :quantite 
+        WHERE id = :id ");
+        $req->execute([
+            ":id" => $panier->getId(),
+            ":quantite" => $qte
         ]);
     }
 

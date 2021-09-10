@@ -13,4 +13,15 @@ class PanierController extends AbstractController {
         $cart = $panier->newPanier($id_commande,$id_produit,$qte);
         //dump($cart);
     }
+
+    public function modificationPanier($params) {
+        $qte = $_POST["quantite"];
+        $panier = new PanierRepository();
+        $cart = $panier->getPanierbyId($params[0]);
+        $updatecart = $panier->updatePanier($cart,$qte);
+        $oldqte = $cart->getQuantite();
+        $this->render("commande/modification.php",[
+            'oldqte' =>$oldqte
+        ]);
+    }
 }

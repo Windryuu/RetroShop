@@ -71,7 +71,8 @@ if ($request->getFilenameExtension() === "png" || $request->getFilenameExtension
     $router->add("search", [$artController, 'search'], $request->getMethod());
     $router->add("test/:id", [$artController, 'show'], $request->getMethod());
     $router->add("commande", [$cmdController, 'showCommande'], $request->getMethod());
-    $router->add("commande/validation", [$cmdController, 'updateCommande'],$request->getMethod());
+    $router->add("commande/validation", [$cmdController, 'validationCommande'],$request->getMethod());
+    $router->add("commande/modification/:id",[$panierController, 'modificationPanier'],$request->getMethod());
     //$router->add("test/:id/addtocart/:id_commande",[$panierController,'nouveauPanier'],$request->getMethod());
 
     //on ajoute les routes dispo dans l'appli
@@ -108,10 +109,7 @@ $router->add("user/update",function(){
     (new CommandeServices())->commandeCheck();
     },$request->getMethod());
 
-$router->add("commande/validation",function(){
-    (new UserRepository());
-    (new CommandeController())->updateCommande();
-    },$request->getMethod());
+
 }
 //on lance notre application
 try {

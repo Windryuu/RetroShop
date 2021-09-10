@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Panier extends Article{
+class Panier{
     private int $id;
     private int $id_commande;
     private int $id_produit;
@@ -11,14 +11,6 @@ class Panier extends Article{
     public function __construct()
     {
         
-    }
-
-    public function addItem(Article $article){
-        $this->id_produit = $article->getId_produit();
-    }
-
-    public function addQte(Article $article){
-        $this->quantite= $article->getId_produit();
     }
 
     /**
